@@ -52,7 +52,7 @@ client.on("message", async(message) => {
     async function execute(message, serverQueue){
         let vc = message.member.voice.channel;
         if(!vc){
-            return message.channel.send("Önce bi kanala gir sonra konuşuruz.")
+            return message.channel.send("Once bi kanala gir sonra konusuruz.")
         }
         else{
             let result = await searcher.search(args.join(" "), {type: "video"})
@@ -88,12 +88,12 @@ client.on("message", async(message) => {
                 catch(err){
                     console.error(err);
                     queue.delete(msg.guild.id);
-                    return message.channel.send(`Ses kanallarına katılamıyorum ${err}`)
+                    return message.channel.send(`Ses kanallarina katilamiyorum ${err}`)
                 }
             }
             else{
                 serverQueue.songs.push(song);
-                return message.channel.send(`${song.url} sıraya alındı`);
+                return message.channel.send(`${song.url} siraya alindi`);
             }
         }
     }
@@ -126,85 +126,85 @@ client.on("message", async(message) => {
 
     function stop(message, serverQueue){
         if(!message.member.voice.channel)
-            return message.channel.send("Önce bi kanala gir sonra konuşuruz."); 
+            return message.channel.send("Once bi kanala gir sonra konusuruz."); 
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
     }
     
     function skip(message, serverQueue){
         if(!message.member.voice.channel)
-            return message.channel.send("Önce bi kanala gir sonra konuşuruz."); 
+            return message.channel.send("Once bi kanala gir sonra konusuruz."); 
         if(!serverQueue)
-            return message.channel.send("Sırada şarkı yok ki skipleyeyim!")
+            return message.channel.send("Sirada sarki yok ki skipleyeyim!")
         serverQueue.connection.dispatcher.end();
     }
 
     function pause(serverQueue){
         if(!serverQueue.connection)
-            return message.channel.send("Çalan bi şarkı yok ki duraklatayım.")
+            return message.channel.send("Calan bi sarkı yok ki duraklatayim.")
         if(!message.member.voice.channel)
-            return message.channel.send("Hiçbir kanalda göremiyorum seni?!")
+            return message.channel.send("Hicbir kanalda goremiyorum seni?!")
         if(serverQueue.connection.dispatcher.paused)
-            return message.channel.send("Çoktan durdurdum kanka ben o şarkıyı")
+            return message.channel.send("Çoktan durdurdum kanka ben o sarkiyi")
         serverQueue.connection.dispatcher.pause();
-        message.channel.send("Tamam, şarkıyı durdurdum")
+        message.channel.send("Tamam, sarkiyi durdurdum")
     }
 
     function resume(serverQueue){
         if(!serverQueue.connection)
-            return message.channel.send("Durdurulmuş bi şarkı yok ki başlatayım.")
+            return message.channel.send("Durdurulmus bi sarkı yok ki baslatayim.")
         if(!message.member.voice.channel)
-            return message.channel.send("Hiçbir kanalda göremiyorum seni?!")
+            return message.channel.send("Hicbir kanalda goremiyorum seni?!")
         if(serverQueue.connection.dispatcher.resumed)
-            return message.channel.send("Çoktan başlattım kanka ben o şarkıyı!")
+            return message.channel.send("Coktan baslattim kanka ben o sarkiyi!")
         serverQueue.connection.dispatcher.resume();
-        message.channel.send("Tamam, şarkıyı başlattım!")
+        message.channel.send("Tamam, sarkiyi baslattim!")
     }
 
     function Loop(args, serverQueue){
         if(!serverQueue.connection)
-            return message.channel.send("Repertuarımda hiç şarkı yok biliyor musun?..")
+            return message.channel.send("Repertuarimda hic sarki yok biliyor musun?..")
         if(!message.member.voice.channel)
-            return message.channel.send("Hiçbir kanalda göremiyorum seni?!")
+            return message.channel.send("Hicbir kanalda goremiyorum seni?!")
         switch(args[0].toLowerCase()){
             case `all`:
                 serverQueue.loopall = !serverQueue.loopall;
                 serverQueue.loopone = false;
 
                 if(serverQueue.loopall === true){
-                    message.channel.send("Listede ne varsa tekrar çaldırıyom he, haberin olsun!");
+                    message.channel.send("Listede ne varsa tekrar caldiriyom he, haberin olsun!");
                 }
                 else
-                    message.channel.send("Tekrarlamayı kapattım!");
+                    message.channel.send("Tekrarlamayi kapattım!");
                 break;
             case `one`:
                 serverQueue.loopone = !serverQueue.loopone;
                 serverQueue.loopall = false;
 
                 if(serverQueue.loopone === true){
-                    message.channel.send("Bu şarkıyı tekrar çaldırıyom he, haberin olsun!");
+                    message.channel.send("Bu sarkiyi tekrar caldiriyom he, haberin olsun!");
                 }
                 else
-                    message.channel.send("Tekrarlamayı kapattım!");
+                    message.channel.send("Tekrarlamayi kapattim!");
                 break;
             case `off`:
                     serverQueue.loopall = false;
                     serverQueue.loopall = false;
-                    message.channel.send("Tekrarlamayı kapattım!")
+                    message.channel.send("Tekrarlamayi kapattim!")
                 break;
             default:
-                message.channel.send("Neyi tekrar dinlemek istiyorsun? *loop <one / all / off> şeklinde belirtmelisin.");
+                message.channel.send("Neyi tekrar dinlemek istiyorsun? *loop <one / all / off> seklinde belirtmelisin.");
         }
     }
 
     function Queue(serverQueue){
         if(!serverQueue.connection)
-            return message.channel.send("Repertuarımda hiç şarkı yok biliyor musun?..")
+            return message.channel.send("Repertuarimda hiç sarki yok biliyor musun?..")
         if(!message.member.voice.channel)
-            return message.channel.send("Hiçbir kanalda göremiyorum seni?!")
+            return message.channel.send("Hicbir kanalda göremiyorum seni?!")
         
         let nowPlaying = serverQueue.songs[0];
-        let qMsg = `Şu an çalan: ${nowPlaying.title}\n -------------------- \n`
+        let qMsg = `Su an calan: ${nowPlaying.title}\n -------------------- \n`
 
         for(var i = 1; i > serverQueue.songs.length; i++){
             qMsg += `${i}. ${serverQueue.songs[i].title}\n`
