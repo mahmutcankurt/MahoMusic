@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mahmutcankurt/MahoMusic/issues"
   },
-  "homepage": "https://github.com/mahmutcankurt/MahoMusic#readme"
+  "homepage": "https://github.com/mahmutcankurt/MahoMusic#readme",
+  "dependencies": {
+    "ytdl-core": "^4.9.1"
+  }
 }
